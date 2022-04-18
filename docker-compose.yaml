@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+    mssqldb:
+        container_name: mssqldb
+        image: "mcr.microsoft.com/mssql/server"
+        ports:
+            - "1433:1433"
+        environment:
+            SA_PASSWORD: "Password123"
+            ACCEPT_EULA: "Y"
+        volumes:
+            - mssqlvol:/var/opt/mssql
+        networks:
+            - backend
+        restart: unless-stopped
+
+    myweb:
+        container_name: myweb
+        image: pattzor/myweb_dotnet
+        build: 
+            context: .
+            dockerfile: Dockerfile.backend
+        ports:
+            - "8080:80"
+        environment: 
+            - ConnectionString=Server=mssqldb,1433;Database=Pluto;User ID=sa;Password=Password123;
+        depends_on:
+            - "mssqldb"
+        networks:
+            - backend
+        restart: on-failure
+
+networks:
+    backend:
+        name: appnet
+
+volumes:
+    mssqlvol:
