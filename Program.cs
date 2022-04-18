@@ -1,6 +1,17 @@
 using myAPi;
 
-string connectionstring = "Server=.;Database=Pluto;User Id=sa;Password=Password123;";
+#region Connection string
+string? connectionstring = Environment.GetEnvironmentVariable("ConnectionString");
+if(string.IsNullOrEmpty(connectionstring)) {
+    connectionstring = "Server=localhost,1433;Database=Pluto;User Id=sa;Password=Password123;";
+    Console.WriteLine("No environment variable found, using default");
+}
+else {
+    Console.WriteLine("Environment variable ConnectionString found: ");
+}
+Console.WriteLine(connectionstring);
+#endregion
+    
 SQL sql = new SQL(connectionstring);
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +27,7 @@ app.MapGet("/contacts", () =>
     List<Contact>? contacts = sql.GetContacts();
 
     if (contacts != null)
-        Results.Ok(sql.GetContacts());
+        return Results.Ok(contacts);
 
     return Results.BadRequest();
 });
@@ -26,7 +37,7 @@ app.MapGet("/contact", (int id) =>
     var contact = sql.GetContact(id);
 
     if (contact.id == id)
-        return Results.Ok();
+        return Results.Ok(contact);
 
     return Results.NotFound();
 });
