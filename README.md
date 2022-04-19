@@ -39,3 +39,16 @@ To run the image in a contianer, run this in a shell:
 
 This will run the image pattzor/myweb, mapping the container port 80, to your laptop port 3000.   
 You should now be able to reach the application: http://localhost:3000   
+
+## Docker compose instructions  
+
+To run the docker-compose file:  
+
+>``docker-compose up -d``  
+
+Make sure you run this command in the same folder as the docker-compose.yml file.  
+
+To stop the containers:  
+
+>``docker-compose down``  
+
