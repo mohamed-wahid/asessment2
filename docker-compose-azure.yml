@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+    mssqldb:
+        container_name: mssqldb
+        image: pattzor/mssqldb
+        ports:
+            - "1433:1433"
+        restart: always
+
+    myweb:
+        container_name: myweb
+        image: pattzor/myweb_dotnet
+        ports:
+            - "8080:80"
+        environment: 
+            ConnectionString: Server=mssqldb,1433;Database=Pluto;User ID=sa;Password=Password123
+        depends_on:
+            -  mssqldb
+        restart: always
