@@ -45,10 +45,11 @@
         function addContact() {
             let contact = {
                 firstName: document.getElementById("fname").value.trim(),
-                lastName: document.getElementById("lname").value.trim()
+                lastName: document.getElementById("lname").value.trim(),
+                phoneNumber: document.getElementById("pnum").value.trim()
             };
 
-            if (contact.firstName === "" || contact.lastName === ! "") {
+            if (contact.firstName === "" || contact.lastName === ! "" || contact.phoneNumber === ! "") {
                 alert("Please provide First- and lastname.");
                 return;
             }
@@ -57,6 +58,7 @@
             xhttp.onload = function () {
                 document.getElementById("fname").value = "";
                 document.getElementById("lname").value = "";
+                document.getElementById("pnum").value = "";
                 getContacts();
             }
             xhttp.onerror = function () {
@@ -95,6 +97,7 @@
                     console.log(data);
                     document.getElementById("fname_edit").value = data.firstName;
                     document.getElementById("lname_edit").value = data.lastName;
+                    document.getElementById("pnum_edit").value = data.phoneNumber;
                     document.getElementById("id_edit").value = data.id;
                 }
                 else {
@@ -114,10 +117,11 @@
             let contact = {
                 id: document.getElementById("id_edit").value.trim(),
                 firstName: document.getElementById("fname_edit").value.trim(),
-                lastName: document.getElementById("lname_edit").value.trim()
+                lastName: document.getElementById("lname_edit").value.trim(),
+                phoneNumber: document.getElementById("pnum_edit").value.trim()
             };
 
-            if (contact.firstName === "" || contact.lastName === ! "") {
+            if (contact.firstName === "" || contact.lastName === ! "" ||contact.phoneNumber === ! "") {
                 alert("Please provide First- and lastname.");
                 return;
             }
@@ -127,6 +131,7 @@
                 if (xhttp.status == 200) {
                     document.getElementById("fname_edit").value = "";
                     document.getElementById("lname_edit").value = "";
+                    document.getElementById("pnum_edit").value = "";
                     getContacts();
                 }
                 else {
@@ -148,6 +153,7 @@
             let rowData = "<tr><td>" + contact.id + "</td>";
             rowData += "<td>" + contact.firstName + "</td>";
             rowData += "<td>" + contact.lastName + "</td>";
+            rowData += "<td>" + contact.phoneNumber + "</td>";
             rowData += "<td>";
             rowData += "<button class=\"btn btn-outline-success btn-sm\" type=\"button\" onclick=\"getContact(" + contact.id + ");\" data-bs-toggle=\"modal\" data-bs-target=\"#myModal\">Edit</button>";
             rowData += "<button class=\"btn btn-outline-danger btn-sm\" type=\"button\" onclick=\"deleteContact(" + contact.id + ");\">Delete</button>";
@@ -170,6 +176,10 @@
                 <input class="form-control" placeholder="Lastname" type="text" id="lname" name="lastName" required>
                 <label for="lname" class="form-label">Lastname</label>
             </div>
+            <div class="form-floating mb-3 mt-3">
+                <input class="form-control" placeholder="Phonenumber" type="text" id="pnum" name="phoneNumber" required>
+                <label for="pnum" class="form-label">Phonenumber</label>
+            </div>
             <div class="mb-3 mt-3">
                 <button class="btn btn-success" type="button" onclick="addContact();">Add contact</button>
             </div>
@@ -183,6 +193,7 @@
                 <th>Id</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
+                <th>Phonenumber</th>
             </thead>
             <tbody id="myTableBody"></tbody>
         </table>
@@ -212,6 +223,11 @@
                                 <input class="form-control" placeholder="Lastname" type="text" id="lname_edit"
                                     name="lastName" required>
                                 <label for="lname_edit" class="form-label">Lastname</label>
+                            </div>
+                            <div class="form-floating mb-3 mt-3">
+                                <input class="form-control" placeholder="Phonenumber" type="text" id="pnum_edit"
+                                    name="phoneNumber" required>
+                                <label for="pnum_edit" class="form-label">Phonenumber</label>
                             </div>
                             <input type="hidden" id="id_edit">
                         </form>

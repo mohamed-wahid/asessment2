@@ -21,7 +21,7 @@ namespace myAPi
                 {
                     connection.Open();
 
-                    String sql = "SELECT Id, FirstName, LastName FROM Contacts";
+                    String sql = "SELECT Id, FirstName, LastName, PhoneNumber FROM Contacts";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -35,7 +35,8 @@ namespace myAPi
                                     {
                                         id = reader.GetInt32(0),
                                         firstName = reader.GetString(1),
-                                        lastName = reader.GetString(2)
+                                        lastName = reader.GetString(2),
+                                        phoneNumber = reader.GetString(3)
                                     });
                                 }
                             }
@@ -61,7 +62,7 @@ namespace myAPi
                 {
                     connection.Open();
 
-                    String sql = "SELECT Id, FirstName, LastName FROM Contacts WHERE Id=" + id;
+                    String sql = "SELECT Id, FirstName, LastName, PhoneNumber FROM Contacts WHERE Id=" + id;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -75,7 +76,8 @@ namespace myAPi
                                     {
                                         id = reader.GetInt32(0),
                                         firstName = reader.GetString(1),
-                                        lastName = reader.GetString(2)
+                                        lastName = reader.GetString(2),
+                                        phoneNumber = reader.GetString(3)
                                     };
                                 }
                             }
@@ -98,7 +100,7 @@ namespace myAPi
                 {
                     connection.Open();
 
-                    String sql = $"INSERT INTO Contacts (FirstName, LastName) VALUES ('{contact.firstName}', '{contact.lastName}')";
+                    String sql = $"INSERT INTO Contacts (FirstName, LastName, PhoneNumber) VALUES ('{contact.firstName}', '{contact.lastName}', '{contact.phoneNumber}')";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -149,7 +151,7 @@ namespace myAPi
                 {
                     connection.Open();
 
-                    String sql = $"UPDATE Contacts SET FirstName='{contact.firstName}', LastName='{contact.lastName}' WHERE Id={contact.id}";
+                    String sql = $"UPDATE Contacts SET FirstName='{contact.firstName}', LastName='{contact.lastName}', PhoneNumber='{contact.phoneNumber}' WHERE Id={contact.id}";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
